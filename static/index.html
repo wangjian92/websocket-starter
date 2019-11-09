@@ -3,14 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-    <title>test websocket page</title>
-
-
-
+    <title>websocket test page</title>
 </head>
 
 <body>
-
+    <p>这是一个测试websocket链接的页面，输入要测试的websocket请求测试链接是否成功</p>
     <div id="sse">
         <input id="url" placeholder="socket url">
         <a href="javascript:WebSocketTest()">test WebSocket</a>
@@ -18,7 +15,11 @@
     <script type="text/javascript">
         var input = document.getElementById("url");
 
-        input.value = 'ws://' + location.hostname + ':' + location.port + '/echo';
+        if (location.protocol === 'https:') {
+            input.value = 'wss://' + location.hostname + '/echo';
+        } else {
+            input.value = 'ws://' + location.hostname + ':' + location.port + '/echo';
+        }
 
         function WebSocketTest() {
             if ("WebSocket" in window) {

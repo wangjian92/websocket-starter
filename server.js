@@ -1,8 +1,10 @@
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const app = express();
 
 const port = 3000;
+const indexfile = path.resolve(__dirname, "./static/index.html");
 
 var expressWs = require("express-ws")(app);
 
@@ -14,8 +16,9 @@ app.ws("/echo", function(ws, req) {
   });
 });
 
-app.use(express.static(path.resolve(__dirname, "static")));
-
+app.get("/", function(req, res) {
+  fs.createReadStream(indexfile).pipe(res);
+});
 app.listen(port);
 
 console.log("http/websocket server listen on http://127.0.0.1:" + port);
