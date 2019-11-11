@@ -3,20 +3,20 @@ const path = require("path");
 const fs = require("fs");
 const app = express();
 
-const port = 3000;
-const indexfile = path.resolve(__dirname, "./static/index.html");
+const port = 3001;
+const indexfile = path.resolve(__dirname, "./index.html");
 
 var expressWs = require("express-ws")(app);
 
-app.ws("/echo", function(ws, req) {
+app.ws("/echo", function (ws, req) {
   console.log("socket connection...");
-  ws.on("message", function(msg) {
+  ws.on("message", function (msg) {
     console.log("message..." + msg);
     ws.send(`服务端接受到的信息：[${msg}]`);
   });
 });
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   fs.createReadStream(indexfile).pipe(res);
 });
 app.listen(port);
